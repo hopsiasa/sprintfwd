@@ -31,6 +31,13 @@ class TeamController extends Controller
         return response()->json(['team' => $team]);
     }
 
+    public function getMembers(Team $team): JsonResponse
+    {
+        $members = $team->members()->get();
+
+        return response()->json(['members' => $members]);
+    }
+
     public function update(Request $request, Team $team): JsonResponse
     {
         $validatedData = $request->validate([

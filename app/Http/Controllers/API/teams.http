@@ -7,6 +7,9 @@ GET http://127.0.0.1:8000/api/teams/1
 Accept: application/json
 
 ###
+GET http://127.0.0.1:8000/api/teams/1/members
+
+###
 POST http://127.0.0.1:8000/api/teams
 Content-Type: application/json
 

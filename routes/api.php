@@ -22,9 +22,12 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::apiResource('teams', TeamController::class);
+Route::get('/teams/{team}/members', [TeamController::class, 'getMembers']);
+
 Route::apiResource('members', MemberController::class);
+Route::put('/members/{member}/update-team', [MemberController::class, 'updateTeam']);
+
 Route::apiResource('projects', ProjectController::class);
 
-Route::put('/members/{member}/update-team', [MemberController::class, 'updateTeam']);
 
 
