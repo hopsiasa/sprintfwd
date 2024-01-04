@@ -25,3 +25,6 @@ Route::apiResource('teams', TeamController::class);
 Route::apiResource('members', MemberController::class);
 Route::apiResource('projects', ProjectController::class);
 
+Route::put('/members/{member}/update-team', [MemberController::class, 'updateTeam']);
+
+

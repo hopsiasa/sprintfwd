@@ -58,4 +58,15 @@ class MemberController extends Controller
 
         return response()->json(['message' => 'Member deleted successfully.']);
     }
+
+    public function updateTeam(Request $request, Member $member): JsonResponse
+    {
+        $validatedData = $request->validate([
+            'team_id' => 'required|exists:teams,id',
+        ]);
+
+        $member->update(['team_id' => $validatedData['team_id']]);
+
+        return response()->json(['member' => $member, 'message' => 'Member team updated successfully.']);
+    }
 }

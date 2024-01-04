@@ -34,6 +34,14 @@ Content-Type: application/json
 }
 
 ###
+PUT http://127.0.0.1:8000/api/members/1/update-team
+Content-Type: application/json
+
+{
+    "team_id": 2
+}
+
+###
 DELETE http://127.0.0.1:8000/api/members/21
 Content-Type: application/json
 
