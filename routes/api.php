@@ -28,6 +28,8 @@ Route::apiResource('members', MemberController::class);
 Route::put('/members/{member}/update-team', [MemberController::class, 'updateTeam']);
 
 Route::apiResource('projects', ProjectController::class);
+Route::post('/projects/{project}/add-member', [ProjectController::class, 'addMember']);
+
 
 
 

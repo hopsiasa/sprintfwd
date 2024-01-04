@@ -26,6 +26,18 @@ class ProjectController extends Controller
         return response()->json(['project' => $project, 'message' => 'Project created successfully.']);
     }
 
+    public function addMember(Request $request, Project $project): JsonResponse
+    {
+        $validatedData = $request->validate([
+            'member_id' => 'required|exists:members,id',
+        ]);
+
+        // Attach the member to the project
+        $project->members()->attach($validatedData['member_id']);
+
+        return response()->json(['project' => $project, 'message' => 'Member added to project successfully.']);
+    }
+
     public function show(Project $project): JsonResponse
     {
         return response()->json(['project' => $project]);
