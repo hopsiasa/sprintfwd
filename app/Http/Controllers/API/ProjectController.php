@@ -15,6 +15,13 @@ class ProjectController extends Controller
         return response()->json(['projects' => $projects]);
     }
 
+    public function getMembers(Project $project): JsonResponse
+    {
+        $members = $project->members()->get();
+
+        return response()->json(['members' => $members]);
+    }
+
     public function store(Request $request): JsonResponse
     {
         $validatedData = $request->validate([

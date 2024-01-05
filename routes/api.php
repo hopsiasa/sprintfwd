@@ -29,6 +29,8 @@ Route::put('/members/{member}/update-team', [MemberController::class, 'updateTea
 
 Route::apiResource('projects', ProjectController::class);
 Route::post('/projects/{project}/add-member', [ProjectController::class, 'addMember']);
+Route::get('/projects/{project}/members', [ProjectController::class, 'getMembers']);
+
 
 
 
