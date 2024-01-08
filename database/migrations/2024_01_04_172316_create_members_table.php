@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('city')->nullable();
             $table->string('state')->nullable();
             $table->string('country')->nullable();
-            $table->foreignId('team_id')->constrained();
+            $table->foreignId('team_id')->constrained()->cascadeOnDelete();
         });
     }
 
