@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\MemberResource;
 use App\Models\Member;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
@@ -31,9 +32,9 @@ class MemberController extends Controller
         return response()->json(['member' => $member, 'message' => 'Member created successfully.']);
     }
 
-    public function show(Member $member): JsonResponse
+    public function show(Member $member): MemberResource
     {
-        return response()->json(['member' => $member]);
+        return new MemberResource($member);
     }
 
     public function update(Request $request, Member $member): JsonResponse

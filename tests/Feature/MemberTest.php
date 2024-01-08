@@ -84,8 +84,27 @@ class MemberTest extends TestCase
         $response = $this->getJson("/api/members/{$member->id}");
 
         $response->assertStatus(200)
-            ->assertJsonStructure(['member'])
-            ->assertJson(['member' => $member->toArray()]);
+            ->assertJsonStructure([
+                'id',
+                'first_name',
+                'last_name',
+                'city',
+                'state',
+                'country',
+                'team_id' => ['id', 'name']
+            ])
+            ->assertJsonFragment([
+                'id' => $member->id,
+                'first_name' => $member->first_name,
+                'last_name' => $member->last_name,
+                'city' => $member->city,
+                'state' => $member->state,
+                'country' => $member->country,
+                'team_id' => [
+                    'id' => $member->team->id,
+                    'name' => $member->team->name,
+                ]
+            ]);
     }
 
     public function test_update_the_team_of_a_member(): void

@@ -3,7 +3,7 @@ GET http://127.0.0.1:8000/api/members
 Accept: application/json
 
 ###
-GET http://127.0.0.1:8000/api/members/2
+GET http://127.0.0.1:8000/api/members/6
 Accept: application/json
 
 ###
