@@ -86,10 +86,12 @@ class TeamController extends Controller
 
     public function destroy($id): ?RedirectResponse
     {
-        $response = $this->teamService->deleteTeam($id);
+        try {
+            $this->teamService->deleteTeam($id);
 
-        if ($response->status() === 200) {
-            return redirect()->route('teams.index')->with('success', 'Team deleted successfully.');
+            return redirect()->route('teams.index')->with('success', 'Member deleted successfully.');
+        } catch (\Exception $e) {
+            return redirect()->route('teams.index')->withErrors(['An error occurred while deleting the team.']);
         }
     }
 }

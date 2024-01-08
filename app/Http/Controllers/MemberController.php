@@ -97,10 +97,12 @@ class MemberController extends Controller
 
     public function destroy($id): ?RedirectResponse
     {
-        $response = $this->memberService->deleteMember($id);
+        try {
+            $this->memberService->deleteMember($id);
 
-        if ($response->status() === 200) {
             return redirect()->route('members.index')->with('success', 'Member deleted successfully.');
+        } catch (\Exception $e) {
+            return redirect()->route('members.index')->withErrors(['An error occurred while deleting the member.']);
         }
     }
 }

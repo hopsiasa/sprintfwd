@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\MemberController;
+use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\TeamController;
 use Illuminate\Support\Facades\Route;
 
@@ -21,3 +22,4 @@ Route::get('/', function () {
 
 Route::resource('teams', TeamController::class);
 Route::resource('members', MemberController::class);
+Route::resource('projects', ProjectController::class);
