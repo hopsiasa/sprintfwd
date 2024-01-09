@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Services\MemberService;
+use App\Services\ProjectService;
 use App\Services\TeamService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -12,11 +13,13 @@ class MemberController extends Controller
 {
     protected MemberService $memberService;
     protected TeamService $teamService;
+    protected ProjectService $projectService;
 
-    public function __construct(MemberService $memberService, TeamService $teamService)
+    public function __construct(MemberService $memberService, TeamService $teamService, ProjectService $projectService)
     {
         $this->memberService = $memberService;
         $this->teamService = $teamService;
+        $this->projectService = $projectService;
     }
 
     public function index()
@@ -35,8 +38,8 @@ class MemberController extends Controller
     public function create()
     {
         try {
-            $response = $this->teamService->getTeams();
-            $teamsObject = json_decode($response->content(), false, 512, JSON_THROW_ON_ERROR);
+            $teamsResponse = $this->teamService->getTeams();
+            $teamsObject = json_decode($teamsResponse->content(), false, 512, JSON_THROW_ON_ERROR);
             $teams = $teamsObject->teams;
 
             return view('members.create', compact('teams'));

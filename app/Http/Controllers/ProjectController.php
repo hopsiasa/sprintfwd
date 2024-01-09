@@ -1,7 +1,8 @@
-<?php
+<?php /** @noinspection DuplicatedCode */
 
 namespace App\Http\Controllers;
 
+use App\Services\MemberService;
 use App\Services\ProjectService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -10,10 +11,12 @@ use JsonException;
 class ProjectController extends Controller
 {
     protected ProjectService $projectService;
+    protected MemberService $memberService;
 
-    public function __construct(ProjectService $projectService)
+    public function __construct(ProjectService $projectService, MemberService $memberService)
     {
         $this->projectService = $projectService;
+        $this->memberService = $memberService;
     }
 
     public function index()
@@ -49,11 +52,15 @@ class ProjectController extends Controller
     public function show($id)
     {
         try {
-            $response = $this->projectService->showProject($id);
-            $projectObject = json_decode($response->content(), false, 512, JSON_THROW_ON_ERROR);
+            $projectResponse = $this->projectService->showProject($id);
+            $projectObject = json_decode($projectResponse->content(), false, 512, JSON_THROW_ON_ERROR);
             $project = $projectObject->project;
 
-            return view('projects.show', compact('project'));
+            $membersResponse = $this->projectService->getMembersForProject($id);
+            $membersObject = json_decode($membersResponse->content(), false, 512, JSON_THROW_ON_ERROR);
+            $members = $membersObject->members;
+
+            return view('projects.show', compact('project', 'members'));
         } catch (JsonException $e) {
             return view('projects.show')->withErrors(['An error occurred while fetching the project.']);
         }
@@ -62,11 +69,15 @@ class ProjectController extends Controller
     public function edit($id)
     {
         try {
-            $response = $this->projectService->showProject($id);
-            $projectObject = json_decode($response->content(), false, 512, JSON_THROW_ON_ERROR);
+            $projectResponse = $this->projectService->showProject($id);
+            $projectObject = json_decode($projectResponse->content(), false, 512, JSON_THROW_ON_ERROR);
             $project = $projectObject->project;
 
-            return view('projects.edit', compact('project'));
+            $membersResponse = $this->memberService->getMembers();
+            $membersObject = json_decode($membersResponse->content(), false, 512, JSON_THROW_ON_ERROR);
+            $members = $membersObject->members;
+
+            return view('projects.edit', compact('project', 'members'));
         } catch (JsonException $e) {
             return view('projects.edit')->withErrors(['An error occurred while fetching the project.']);
         }
@@ -77,6 +88,8 @@ class ProjectController extends Controller
         try {
             $response = $this->projectService->updateProject($request, $id);
             $project = json_decode($response->content(), false, 512, JSON_THROW_ON_ERROR);
+
+            $this->projectService->addMemberToProject($request, $id);
 
             return redirect()->route('projects.index')->with('success', $project->message);
         } catch (JsonException $e) {

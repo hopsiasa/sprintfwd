@@ -53,7 +53,11 @@ class TeamController extends Controller
             $teamObject = json_decode($response->content(), false, 512, JSON_THROW_ON_ERROR);
             $team = $teamObject->team;
 
-            return view('teams.show', compact('team'));
+            $membersResponse = $this->teamService->getTeamMembers($id);
+            $membersObject = json_decode($membersResponse->content(), false, 512, JSON_THROW_ON_ERROR);
+            $teamMembers = $membersObject->members;
+
+            return view('teams.show', compact('team', 'teamMembers'));
         } catch (JsonException $e) {
             return view('teams.show')->withErrors(['An error occurred while fetching the team.']);
         }

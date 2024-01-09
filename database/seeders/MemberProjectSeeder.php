@@ -10,7 +10,6 @@ class MemberProjectSeeder extends Seeder
 {
     public function run()
     {
-        // Attach projects to members
         Member::all()->each(function ($member) {
             $projects = Project::inRandomOrder()->limit(rand(1, 5))->get();
             $member->projects()->attach($projects);

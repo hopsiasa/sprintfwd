@@ -39,7 +39,6 @@ class ProjectController extends Controller
             'member_id' => 'required|exists:members,id',
         ]);
 
-        // Attach the member to the project
         $project->members()->attach($validatedData['member_id']);
 
         return response()->json(['project' => $project, 'message' => 'Member added to project successfully.']);

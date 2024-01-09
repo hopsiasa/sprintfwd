@@ -26,11 +26,25 @@ class ProjectService
         return $this->projectController->store($request);
     }
 
+    public function addMemberToProject(Request $request, $id): JsonResponse
+    {
+        $project = Project::findOrFail($id);
+
+        return $this->projectController->addMember($request, $project);
+    }
+
     public function showProject($id): JsonResponse
     {
         $project = Project::findOrFail($id);
 
         return $this->projectController->show($project);
+    }
+
+    public function getMembersForProject($id): JsonResponse
+    {
+        $project = Project::findOrFail($id);
+
+        return $this->projectController->getMembers($project);
     }
 
     public function updateProject(Request $request, $id): JsonResponse

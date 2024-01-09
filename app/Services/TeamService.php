@@ -21,6 +21,13 @@ class TeamService
         return $this->teamController->index();
     }
 
+    public function getTeamMembers($id): JsonResponse
+    {
+        $team = Team::findOrFail($id);
+
+        return $this->teamController->getMembers($team);
+    }
+
     public function newTeam(Request $request): JsonResponse
     {
         return $this->teamController->store($request);

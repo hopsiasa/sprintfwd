@@ -6,8 +6,10 @@
         @csrf
         <label for="first_name">First Name:</label>
         <input type="text" name="first_name" required>
+
         <label for="last_name">Last Name:</label>
         <input type="text" name="last_name" required>
+
         <label for="team">Team:</label>
         <select name="team_id" id="team">
             @foreach($teams as $team)
